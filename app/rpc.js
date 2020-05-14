@@ -98,7 +98,7 @@ export default class RPC {
       axios(url, {
         data: {
           jsonrpc: '2.0',
-          id: 'curltest',
+          id: 'qvr',
           method,
           params
         },
@@ -169,7 +169,7 @@ export default class RPC {
     info.latestBlock = infoResult.result.blocks;
     info.connections = infoResult.result.connections;
     info.version = infoResult.result.version;
-    info.currencyName = info.testnet ? 'TAZ' : 'ZEC';
+    info.currencyName = info.testnet ? 'TAZ' : 'ARW';
     info.zecPrice = null; // Setting this to null will copy over the existing price
     info.disconnected = false;
 
@@ -365,12 +365,12 @@ export default class RPC {
   // Get all Addresses, including T and Z addresses
   async fetchAllAddresses() {
     const zaddrsPromise = RPC.doRPC('z_listaddresses', [], this.rpcConfig);
-    const taddrsPromise = RPC.doRPC('getaddressesbyaccount', [''], this.rpcConfig);
+    const taddrsPromise = RPC.doRPC('listaddressgroupings', [], this.rpcConfig);
 
     const allZ = (await zaddrsPromise).result;
-    const allT = (await taddrsPromise).result;
+    const allT = (await taddrsPromise).result.map(outer => outer.map(inner => inner[0]));
 
-    this.fnSetAllAddresses(allZ.concat(allT));
+    this.fnSetAllAddresses(allZ.concat(...allT));
   }
 
   // Send a transaction using the already constructed sendJson structure
@@ -458,7 +458,7 @@ export default class RPC {
 
     try {
       const response = await new Promise((resolve, reject) => {
-        axios('https://api.coincap.io/v2/rates/zcash', {
+        axios('https://safe.trade/api/v2/peatio/public/markets/tickers', {
           method: 'GET'
         })
           .then(r => resolve(r.data))
@@ -469,7 +469,7 @@ export default class RPC {
 
       const zecData = response.data;
       if (zecData) {
-        this.fnSetZecPrice(zecData.rateUsd);
+        this.fnSetZecPrice(zecData['arwbtc'].ticker.last);
         this.setupNextZecPriceRefresh(0, 1000 * 60 * 60); // Every hour
       } else {
         this.fnSetZecPrice(null);

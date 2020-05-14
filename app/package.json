@@ -1,8 +1,8 @@
 {
-  "name": "zecwallet",
-  "productName": "Zecwallet Fullnode",
+  "name": "quiver",
+  "productName": "Quiver Fullnode",
   "version": "0.9.11",
-  "description": "Zecwallet Fullnode",
+  "description": "Quiver Fullnode",
   "main": "./main.prod.js",
   "author": {
     "name": "Aditya Kulkarni",

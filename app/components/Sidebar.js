@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import styles from './Sidebar.module.css';
 import cstyles from './Common.module.css';
 import routes from '../constants/routes.json';
-import Logo from '../assets/img/logobig.png';
+import Logo from '../assets/img/arrow.png';
 import { Info, Transaction } from './AppState';
 import Utils from '../utils/utils';
 
@@ -224,12 +224,14 @@ class Sidebar extends PureComponent<Props, State> {
     // About
     ipcRenderer.on('about', () => {
       openErrorModal(
-        'Zecwallet Fullnode',
+        'Quiver Fullnode',
         <div className={cstyles.verticalflex}>
-          <div className={cstyles.margintoplarge}>Zecwallet Fullnode v0.9.11</div>
-          <div className={cstyles.margintoplarge}>Built with Electron. Copyright (c) 2018-2020, Aditya Kulkarni.</div>
+          <div className={cstyles.margintoplarge}>Quiver Fullnode v0.9.11</div>
+          <div className={cstyles.margintoplarge}>Built with Electron.</div>
+          <div className={cstyles.margintoplarge}>Copyright (c) 2018-2020, Aditya Kulkarni.</div>
+          <div className={cstyles.margintoplarge}>Copyright (c) 2020, Arrow.</div>
           <div className={cstyles.margintoplarge}>
-            The MIT License (MIT) Copyright (c) 2018-present Zecwallet
+            The MIT License (MIT) Copyright (c) 2018-present Quiver
             <br />
             <br />
             Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -278,7 +280,7 @@ class Sidebar extends PureComponent<Props, State> {
     ipcRenderer.on('exportalltx', async () => {
       const save = await remote.dialog.showSaveDialog({
         title: 'Save Transactions As CSV',
-        defaultPath: 'zecwallet_transactions.csv',
+        defaultPath: 'quiver_transactions.csv',
         filters: [{ name: 'CSV File', extensions: ['csv'] }],
         properties: ['showOverwriteConfirmation']
       });
@@ -317,7 +319,7 @@ class Sidebar extends PureComponent<Props, State> {
       const { addresses, getPrivKeyAsString } = this.props;
 
       // We'll do an array iteration rather than a async array.map, because there might
-      // be several keys, and we don't want to hammer zcashd with 100s of RPC calls.
+      // be several keys, and we don't want to hammer arrowd with 100s of RPC calls.
       const exportedPrivKeys = [];
       // eslint-disable-next-line no-restricted-syntax
       // eslint-disable-next-line no-plusplus
@@ -342,9 +344,9 @@ class Sidebar extends PureComponent<Props, State> {
       this.setState({ exportPrivKeysModalIsOpen: true, exportedPrivKeys });
     });
 
-    // View zcashd
-    ipcRenderer.on('zcashd', () => {
-      history.push(routes.ZCASHD);
+    // View arrowd
+    ipcRenderer.on('arrowd', () => {
+      history.push(routes.ARROWD);
     });
 
     // Connect mobile app
@@ -429,14 +431,14 @@ class Sidebar extends PureComponent<Props, State> {
     }
 
     const parsedUri = url.parse(uri);
-    if (!parsedUri || parsedUri.protocol !== 'zcash:' || !parsedUri.query) {
+    if (!parsedUri || parsedUri.protocol !== 'arrow:' || !parsedUri.query) {
       openErrorModal(errTitle, errBody);
       return;
     }
 
     const address = parsedUri.host;
     if (!address || !(Utils.isTransparent(address) || Utils.isZaddr(address))) {
-      openErrorModal(errTitle, <span>The address ${address} was not recognized as a Zcash address</span>);
+      openErrorModal(errTitle, <span>The address ${address} was not recognized as an Arrow address</span>);
       return;
     }
 

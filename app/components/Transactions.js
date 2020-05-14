@@ -49,7 +49,7 @@ const TxModalInternal = ({ modalIsOpen, tx, closeModal, currencyName, zecPrice, 
     if (currencyName === 'TAZ') {
       shell.openExternal(`https://chain.so/tx/ZECTEST/${txid}`);
     } else {
-      shell.openExternal(`https://zcha.in/transactions/${txid}`);
+      shell.openExternal(`http://explorer.arrowchain.net/tx/${txid}`);
     }
   };
 
@@ -94,7 +94,7 @@ const TxModalInternal = ({ modalIsOpen, tx, closeModal, currencyName, zecPrice, 
           {type === 'send' && (
             <div>
               <div className={[cstyles.sublight].join(' ')}>Fees</div>
-              <div>ZEC {Utils.maxPrecisionTrimmed(tx.fee)}</div>
+              <div>ARW {Utils.maxPrecisionTrimmed(tx.fee)}</div>
             </div>
           )}
 

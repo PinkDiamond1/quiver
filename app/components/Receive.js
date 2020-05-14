@@ -36,7 +36,7 @@ const AddressBlock = ({ addressBalance, label, currencyName, zecPrice, privateKe
     if (currencyName === 'TAZ') {
       shell.openExternal(`https://chain.so/address/ZECTEST/${address}`);
     } else {
-      shell.openExternal(`https://zcha.in/accounts/${address}`);
+      shell.openExternal(`http://explorer.arrowchain.net/address/${address}`);
     }
   };
 
@@ -143,7 +143,6 @@ export default class Receive extends Component<Props> {
       map[a.address] = a.balance;
       return map;
     }, {});
-
     const zaddrs = addresses
       .filter(a => Utils.isSapling(a))
       .slice(0, 100)
@@ -185,67 +184,31 @@ export default class Receive extends Component<Props> {
     return (
       <div>
         <div className={styles.receivecontainer}>
-          <Tabs>
-            <TabList>
-              <Tab>Shielded</Tab>
-              <Tab>Transparent</Tab>
-            </TabList>
+        {/* Change the hardcoded height */}
+        <ScrollPane offsetHeight={100}>
+          <Accordion preExpanded={[defaultZaddr]}>
+            {zaddrs.map(a => (
+              <AddressBlock
+                key={a.address}
+                addressBalance={a}
+                currencyName={info.currencyName}
+                label={addressBookMap[a.address]}
+                zecPrice={info.zecPrice}
+                privateKey={addressPrivateKeys[a.address]}
+                fetchAndSetSinglePrivKey={fetchAndSetSinglePrivKey}
+                rerender={this.rerender}
+              />
+            ))}
+          </Accordion>
 
-            <TabPanel key={`z${rerenderKey}`}>
-              {/* Change the hardcoded height */}
-              <ScrollPane offsetHeight={100}>
-                <Accordion preExpanded={[defaultZaddr]}>
-                  {zaddrs.map(a => (
-                    <AddressBlock
-                      key={a.address}
-                      addressBalance={a}
-                      currencyName={info.currencyName}
-                      label={addressBookMap[a.address]}
-                      zecPrice={info.zecPrice}
-                      privateKey={addressPrivateKeys[a.address]}
-                      fetchAndSetSinglePrivKey={fetchAndSetSinglePrivKey}
-                      rerender={this.rerender}
-                    />
-                  ))}
-                </Accordion>
-
-                <button
-                  className={[cstyles.primarybutton, cstyles.margintoplarge, cstyles.marginbottomlarge].join(' ')}
-                  onClick={() => createNewAddress(true)}
-                  type="button"
-                >
-                  New Shielded Address
-                </button>
-              </ScrollPane>
-            </TabPanel>
-
-            <TabPanel key={`t${rerenderKey}`}>
-              {/* Change the hardcoded height */}
-              <ScrollPane offsetHeight={100}>
-                <Accordion preExpanded={[defaultTaddr]}>
-                  {taddrs.map(a => (
-                    <AddressBlock
-                      key={a.address}
-                      addressBalance={a}
-                      currencyName={info.currencyName}
-                      zecPrice={info.zecPrice}
-                      privateKey={addressPrivateKeys[a.address]}
-                      fetchAndSetSinglePrivKey={fetchAndSetSinglePrivKey}
-                      rerender={this.rerender}
-                    />
-                  ))}
-                </Accordion>
-
-                <button
-                  className={[cstyles.primarybutton, cstyles.margintoplarge, cstyles.marginbottomlarge].join(' ')}
-                  type="button"
-                  onClick={() => createNewAddress(false)}
-                >
-                  New Transparent Address
-                </button>
-              </ScrollPane>
-            </TabPanel>
-          </Tabs>
+          <button
+            className={[cstyles.primarybutton, cstyles.margintoplarge, cstyles.marginbottomlarge].join(' ')}
+            onClick={() => createNewAddress(true)}
+            type="button"
+          >
+            New Shielded Address
+          </button>
+        </ScrollPane>
         </div>
       </div>
     );

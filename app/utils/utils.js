@@ -1,27 +1,42 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-else-return */
 /* eslint-disable no-plusplus */
-export const NO_CONNECTION: string = 'Could not connect to zcashd';
+export const NO_CONNECTION: string = 'Could not connect to arrowd';
 
 export default class Utils {
   static isSapling(addr: string): boolean {
     if (!addr) return false;
-    return new RegExp('^z[a-z0-9]{77}$').test(addr) || new RegExp('^ztestsapling[a-z0-9]{76}$').test(addr);
-  }
-
-  static isSprout(addr: string): boolean {
-    if (!addr) return false;
-    return new RegExp('^z[a-zA-Z0-9]{94}$').test(addr);
+    return new RegExp('^as[a-z0-9]{76}$').test(addr) || new RegExp('^ztestsapling[a-z0-9]{76}$').test(addr);
   }
 
   static isZaddr(addr: string): boolean {
     if (!addr) return false;
-    return Utils.isSapling(addr) || Utils.isSprout(addr);
+    return Utils.isSapling(addr);
   }
 
   static isTransparent(addr: string): boolean {
     if (!addr) return false;
-    return new RegExp('^t[a-zA-Z0-9]{34}$').test(addr);
+    const normal = new RegExp('^ar[a-zA-Z0-9]{33}$').test(addr);
+    const script = new RegExp('^aw[a-zA-Z0-9]{33}$').test(addr);
+    return normal || script;
+  }
+
+  static isFounder(addr: string): boolean {
+    if (!addr) return false;
+    if (
+      addr === 'awGmPHrdDEoR94moWqgkCgoftqVnxmSU8TW' ||
+      addr === 'awKh816Uu7SknBiRUqpEhAmzLgCfRMwToob' ||
+      addr === 'awHTq3WV9jwa7GnwFUex29Do2dxNEkpHrR4' ||
+      addr === 'aw9y6sA7TfnLfBcE7QdJED5jL4BRL7xnPi6' ||
+      addr === 'aw3PJCcQPHKzYbVpVSc4ka4MnRqdDbmvvbL' ||
+      addr === 'awLTtMyrwZXXZ592xJtmtDegCe56zxhMDAv' ||
+      addr === 'aw8Rtid3iKpCxyXCJ9ugGGVpuuSr18qpR6d' ||
+      addr === 'awDitPs5DiuGQo4Nzsws5Hk7ugX6YjQ52km' ||
+      addr === 'aw8MnQYsjxnfevUQKuGYhteZ1WoGWsk3VkA'
+    ) {
+      return true;
+    }
+    return false;
   }
 
   static isValidSaplingPrivateKey(key: string): boolean {
@@ -127,7 +142,7 @@ export default class Utils {
   }
 
   static getDefaultDonationMemo(testnet: boolean): string {
-    return 'Thanks for supporting Zecwallet!';
+    return 'Thanks for supporting Quiver!';
   }
 
   static getZecToUsdString(price: number | null, zecValue: number | null): string {

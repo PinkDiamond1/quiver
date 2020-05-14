@@ -11,9 +11,9 @@ html {
 
 body {
   position: relative;
-  color: white;
+  color: #73c6d9;
   height: 100vh;
-  background-color: #212124;
+  background-color: #e5e5e5;
   font-family: Roboto, Arial, Helvetica, Helvetica Neue, serif;
 }
 
@@ -36,7 +36,7 @@ h2 {
   font-size: 2.25rem;
   font-weight: bold;
   letter-spacing: -0.025em;
-  color: #fff;
+  color: #73c6d9;
 }
 
 p {
@@ -48,7 +48,7 @@ li {
 }
 
 a {
-  color: white;
+  color: #73c6d9;
   text-decoration: none;
 }
 

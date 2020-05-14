@@ -450,7 +450,7 @@ export default class RouteApp extends React.Component<Props, AppState> {
                 )}
               />
 
-              <Route path={routes.ZCASHD} render={() => <Zcashd info={info} refresh={this.doRefresh} />} />
+              <Route path={routes.ARROWD} render={() => <Zcashd info={info} refresh={this.doRefresh} />} />
 
               <Route
                 path={routes.CONNECTMOBILE}

@@ -1,8 +1,8 @@
 {
-  "name": "zecwallet",
-  "productName": "Zecwallet Fullnode",
+  "name": "quiver",
+  "productName": "Quiver Fullnode",
   "version": "0.9.11",
-  "description": "Zecwallet Fullnode (Electron version)",
+  "description": "Quiver Fullnode (Electron version)",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
@@ -52,8 +52,8 @@
     ]
   },
   "build": {
-    "productName": "Zecwallet Fullnode",
-    "appId": "co.zecwallet.fullnode",
+    "productName": "Quiver Fullnode",
+    "appId": "co.quiver.fullnode",
     "afterAllArtifactBuild": "./afterSignHook.js",
     "files": [
       "dist/",
@@ -121,7 +121,7 @@
         "libxtst6",
         "libnss3"
       ],
-      "artifactName": "Zecwallet_Fullnode_${version}_${arch}.deb"
+      "artifactName": "Quiver_Fullnode_${version}_${arch}.deb"
     },
     "linux": {
       "category": "Development",
@@ -140,15 +140,15 @@
         "AppImage"
       ],
       "desktop": {
-        "Name": "ZecWallet",
-        "Comment": "Full node and wallet for Zcash",
+        "Name": "Quiver",
+        "Comment": "Full node and wallet for Arrow",
         "GenericName": "Wallet",
         "Type": "Application",
         "StartupNotify": true,
-        "StartupWMClass": "zecwallet",
+        "StartupWMClass": "quiver",
         "Categories": "Utility;",
-        "MimeType": "x-scheme-handler/zcash;",
-        "Keywords": "zecwallet;"
+        "MimeType": "x-scheme-handler/quiver;",
+        "Keywords": "quiver;"
       }
     },
     "directories": {
@@ -174,7 +174,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/adityapk00/zecwallet-electron/issues"
+    "url": "https://github.com/Arrowchain/quiver/issues"
   },
   "keywords": [
     "electron",
@@ -187,7 +187,7 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/adityapk00/zecwallet-electron#readme",
+  "homepage": "https://github.com/Arrowchain/quiver#readme",
   "jest": {
     "testURL": "http://localhost/",
     "moduleNameMapper": {

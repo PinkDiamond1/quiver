@@ -18,47 +18,47 @@ import RPC from '../rpc';
 import cstyles from './Common.module.css';
 import styles from './LoadingScreen.module.css';
 import { NO_CONNECTION } from '../utils/utils';
-import Logo from '../assets/img/logobig.png';
-import zcashdlogo from '../assets/img/zcashdlogo.gif';
+import Logo from '../assets/img/arrow.png';
+import zcashdlogo from '../assets/img/arrowlogo.gif';
 
 const locateZcashConfDir = () => {
   if (os.platform() === 'darwin') {
-    return path.join(remote.app.getPath('appData'), 'Zcash');
+    return path.join(remote.app.getPath('appData'), 'Arrow');
   }
 
   if (os.platform() === 'linux') {
-    return path.join(remote.app.getPath('home'), '.zcash');
+    return path.join(remote.app.getPath('home'), '.arrow');
   }
 
-  return path.join(remote.app.getPath('appData'), 'Zcash');
+  return path.join(remote.app.getPath('appData'), 'Arrow');
 };
 
 const locateZcashConf = () => {
   if (os.platform() === 'darwin') {
-    return path.join(remote.app.getPath('appData'), 'Zcash', 'zcash.conf');
+    return path.join(remote.app.getPath('appData'), 'Arrow', 'arrow.conf');
   }
 
   if (os.platform() === 'linux') {
-    return path.join(remote.app.getPath('home'), '.zcash', 'zcash.conf');
+    return path.join(remote.app.getPath('home'), '.arrow', 'arrow.conf');
   }
 
-  return path.join(remote.app.getPath('appData'), 'Zcash', 'zcash.conf');
+  return path.join(remote.app.getPath('appData'), 'Arrow', 'arrow.conf');
 };
 
 const locateZcashd = () => {
   // const con = remote.getGlobal('console');
   // con.log(`App path = ${remote.app.getAppPath()}`);
-  // con.log(`Unified = ${path.join(remote.app.getAppPath(), '..', 'bin', 'mac', 'zcashd')}`);
+  // con.log(`Unified = ${path.join(remote.app.getAppPath(), '..', 'bin', 'mac', 'arrowd')}`);
 
   if (os.platform() === 'darwin') {
-    return path.join(remote.app.getAppPath(), '..', 'bin', 'mac', 'zcashd');
+    return path.join(remote.app.getAppPath(), '..', 'bin', 'mac', 'arrowd');
   }
 
   if (os.platform() === 'linux') {
-    return path.join(remote.app.getAppPath(), '..', 'bin', 'linux', 'zcashd');
+    return path.join(remote.app.getAppPath(), '..', 'bin', 'linux', 'arrowd');
   }
 
-  return path.join(remote.app.getAppPath(), '..', 'bin', 'win', 'zcashd.exe');
+  return path.join(remote.app.getAppPath(), '..', 'bin', 'win', 'arrowd.exe');
 };
 
 const locateZcashParamsDir = () => {
@@ -169,9 +169,9 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
 
     // Check for the params
     const params = [
-      { name: 'sapling-output.params', url: 'https://params.zecwallet.co/params/sapling-output.params' },
-      { name: 'sapling-spend.params', url: 'https://params.zecwallet.co/params/sapling-spend.params' },
-      { name: 'sprout-groth16.params', url: 'https://params.zecwallet.co/params/sprout-groth16.params' }
+      { name: 'sapling-output.params', url: 'https://params.quiver.co/params/sapling-output.params' },
+      { name: 'sapling-spend.params', url: 'https://params.quiver.co/params/sapling-spend.params' },
+      { name: 'sprout-groth16.params', url: 'https://params.quiver.co/params/sprout-groth16.params' }
     ];
 
     // eslint-disable-next-line no-plusplus
@@ -198,7 +198,7 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
   };
 
   async loadZcashConf(createIfMissing: boolean) {
-    // Load the RPC config from zcash.conf file
+    // Load the RPC config from arrow.conf file
     const zcashLocation = locateZcashConf();
     let confValues;
     try {
@@ -210,7 +210,7 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
       }
 
       this.setState({
-        currentStatus: `Could not create zcash.conf at ${zcashLocation}. This is a bug, please file an issue with Zecwallet`
+        currentStatus: `Could not create arrow.conf at ${zcashLocation}. This is a bug, please file an issue with Quiver`
       });
       return;
     }
@@ -224,12 +224,12 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
       this.setState({
         currentStatus: (
           <div>
-            <p>Your zcash.conf is missing a &quot;rpcuser&quot; or &quot;rpcpassword&quot;.</p>
+            <p>Your arrow.conf is missing a &quot;rpcuser&quot; or &quot;rpcpassword&quot;.</p>
             <p>
               Please add a &quot;rpcuser=some_username&quot; and &quot;rpcpassword=some_password&quot; to your
-              zcash.conf to enable RPC access
+              arrow.conf to enable RPC access
             </p>
-            <p>Your zcash.conf is located at {zcashLocation}</p>
+            <p>Your arrow.conf is located at {zcashLocation}</p>
           </div>
         )
       });
@@ -238,7 +238,7 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
 
     const isTestnet = (confValues.testnet && confValues.testnet === '1') || false;
     const server = confValues.rpcbind || '127.0.0.1';
-    const port = confValues.rpcport || (isTestnet ? '18232' : '8232');
+    const port = confValues.rpcport || (isTestnet ? '16543' : '6543');
     rpcConfig.url = `http://${server}:${port}`;
 
     this.setState({ rpcConfig });
@@ -259,7 +259,7 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
 
     let confContent = '';
     confContent += 'server=1\n';
-    confContent += 'rpcuser=zecwallet\n';
+    confContent += 'rpcuser=quiver\n';
     confContent += `rpcpassword=${Math.random()
       .toString(36)
       .substring(2, 15)}\n`;
@@ -278,17 +278,17 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
     this.loadZcashConf(false);
   };
 
-  zcashd: ChildProcessWithoutNullStreams | null = null;
+  arrowd: ChildProcessWithoutNullStreams | null = null;
 
   setupExitHandler = () => {
-    // App is quitting, exit zcashd as well
+    // App is quitting, exit arrowd as well
     ipcRenderer.on('appquitting', () => {
-      if (this.zcashd) {
+      if (this.arrowd) {
         const { history } = this.props;
 
-        this.setState({ currentStatus: 'Waiting for zcashd to exit' });
+        this.setState({ currentStatus: 'Waiting for arrowd to exit' });
         history.push(routes.LOADING);
-        this.zcashd.kill();
+        this.arrowd.kill();
       }
 
       // And reply that we're all done.
@@ -300,21 +300,21 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
     const { zcashdSpawned } = this.state;
 
     if (zcashdSpawned) {
-      this.setState({ currentStatus: 'zcashd start failed' });
+      this.setState({ currentStatus: 'arrowd start failed' });
       return;
     }
 
     const program = locateZcashd();
     console.log(program);
 
-    this.zcashd = spawn(program);
+    this.arrowd = spawn(program);
 
     this.setState({ zcashdSpawned: 1 });
-    this.setState({ currentStatus: 'zcashd starting...' });
+    this.setState({ currentStatus: 'arrowd starting...' });
 
-    this.zcashd.on('error', err => {
-      console.log(`zcashd start error, giving up. Error: ${err}`);
-      // Set that we tried to start zcashd, and failed
+    this.arrowd.on('error', err => {
+      console.log(`arrowd start error, giving up. Error: ${err}`);
+      // Set that we tried to start arrowd, and failed
       this.setState({ zcashdSpawned: 1 });
 
       // No point retrying.
@@ -346,13 +346,13 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
       this.setState({ currentStatus: err });
 
       if (err === NO_CONNECTION && !zcashdSpawned) {
-        // Try to start zcashd
+        // Try to start arrowd
         this.startZcashd();
         this.setupNextGetInfo();
       }
 
       if (err === NO_CONNECTION && zcashdSpawned && getinfoRetryCount < 10) {
-        this.setState({ currentStatus: 'Waiting for zcashd to start...' });
+        this.setState({ currentStatus: 'Waiting for arrowd to start...' });
         const inc = getinfoRetryCount + 1;
         this.setState({ getinfoRetryCount: inc });
         this.setupNextGetInfo();
@@ -363,11 +363,11 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
         this.setState({
           currentStatus: (
             <span>
-              Failed to start zcashd. Giving up! Please look at the debug.log file.
+              Failed to start arrowd. Giving up! Please look at the debug.log file.
               <br />
               <span className={cstyles.highlight}>{`${locateZcashConfDir()}/debug.log`}</span>
               <br />
-              Please file an issue with Zecwallet
+              Please file an issue with Quiver
             </span>
           )
         });
@@ -411,11 +411,11 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
                     ' '
                   )}
                 >
-                  <div className={[cstyles.xlarge].join(' ')}> Welcome To Zecwallet Fullnode!</div>
+                  <div className={[cstyles.xlarge].join(' ')}> Welcome To Quiver Fullnode!</div>
                 </div>
 
                 <div className={[cstyles.center, cstyles.margintoplarge].join(' ')}>
-                  <img src={zcashdlogo} width="400px" alt="zcashdlogo" />
+                  <img src={zcashdlogo} width="400px" alt="arrow logo" />
                 </div>
 
                 <div
@@ -423,16 +423,16 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
                   style={{ width: '75%', marginLeft: '15%' }}
                 >
                   <div>
-                    Zecwallet Fullnode will download the{' '}
-                    <span className={cstyles.highlight}>entire Zcash Blockchain (~28GB)</span>, which might take several
+                    Quiver Fullnode will download the{' '}
+                    <span className={cstyles.highlight}>entire Arrow Blockchain (~2GB)</span>, which might take several
                     days to sync. If you want to get started immediately, please consider{' '}
                     <a
                       className={cstyles.highlight}
                       style={{ textDecoration: 'underline' }}
                       role="link"
-                      onClick={() => shell.openExternal('https://www.zecwallet.co')}
+                      onClick={() => shell.openExternal('https://github.com/Arrowchain/quiver-lite/releases')}
                     >
-                      Zecwallet Lite
+                      Quiver Lite
                     </a>
                     , which can get you started in under a minute.
                   </div>
@@ -458,15 +458,15 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
                       &nbsp; Enable Fast Sync
                     </div>
                     <div className={cstyles.sublight}>
-                      When enabled, Zecwallet will skip some expensive verifications of the zcashd blockchain when
-                      downloading. This option is safe to use if you are creating a brand new wallet.
+                      When enabled, Quiver will skip some expensive verifications of the arrowd blockchain when
+                      downloading. This option is only safe to use if you are creating a brand new wallet.
                     </div>
                   </div>
                 </div>
 
                 <div className={cstyles.buttoncontainer}>
                   <button type="button" className={cstyles.primarybutton} onClick={this.createZcashconf}>
-                    Start Zcash
+                    Start Arrow
                   </button>
                 </div>
               </div>

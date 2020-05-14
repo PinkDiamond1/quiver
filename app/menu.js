@@ -58,10 +58,10 @@ export default class MenuBuilder {
     const { mainWindow } = this;
 
     const subMenuAbout = {
-      label: 'Zecwallet Fullnode',
+      label: 'Quiver Fullnode',
       submenu: [
         {
-          label: 'About Zecwallet Fullnode',
+          label: 'About Quiver Fullnode',
           selector: 'orderFrontStandardAboutPanel:',
           click: () => {
             mainWindow.webContents.send('about');
@@ -71,7 +71,7 @@ export default class MenuBuilder {
         { label: 'Services', submenu: [] },
         { type: 'separator' },
         {
-          label: 'Hide Zecwallet Fullnode',
+          label: 'Hide Quiver Fullnode',
           accelerator: 'Command+H',
           selector: 'hide:'
         },
@@ -150,9 +150,9 @@ export default class MenuBuilder {
           }
         },
         {
-          label: 'zcashd info',
+          label: 'arrowd info',
           click: () => {
-            this.mainWindow.webContents.send('zcashd');
+            this.mainWindow.webContents.send('arrowd');
           }
         },
         { type: 'separator' },
@@ -175,9 +175,9 @@ export default class MenuBuilder {
           }
         },
         {
-          label: 'zcashd info',
+          label: 'arrowd info',
           click: () => {
-            this.mainWindow.webContents.send('zcashd');
+            this.mainWindow.webContents.send('arrowd');
           }
         }
       ]
@@ -207,13 +207,13 @@ export default class MenuBuilder {
         {
           label: 'Check github.com for updates',
           click() {
-            shell.openExternal('https://github.com/zcashfoundation/zecwallet/releases');
+            shell.openExternal('https://github.com/Arrowchain/quiver/releases');
           }
         },
         {
           label: 'File a bug...',
           click() {
-            shell.openExternal('https://github.com/zcashfoundation/zecwallet/issues');
+            shell.openExternal('https://github.com/Arrowchain/quiver/issues');
           }
         }
       ]
@@ -283,9 +283,9 @@ export default class MenuBuilder {
             }
           },
           {
-            label: 'zcashd info',
+            label: 'arrowd info',
             click: () => {
-              this.mainWindow.webContents.send('zcashd');
+              this.mainWindow.webContents.send('arrowd');
             }
           }
         ]
@@ -294,27 +294,21 @@ export default class MenuBuilder {
         label: 'Help',
         submenu: [
           {
-            label: 'About Zecwallet Fullnode',
+            label: 'About Quiver Fullnode',
             click: () => {
               mainWindow.webContents.send('about');
             }
           },
           {
-            label: 'Donate',
-            click() {
-              mainWindow.webContents.send('donate');
-            }
-          },
-          {
             label: 'Check github.com for updates',
             click() {
-              shell.openExternal('https://github.com/zcashfoundation/zecwallet/releases');
+              shell.openExternal('https://github.com/Arrowchain/quiver/releases');
             }
           },
           {
             label: 'File a bug...',
             click() {
-              shell.openExternal('https://github.com/zcashfoundation/zecwallet/issues');
+              shell.openExternal('https://github.com/Arrowchain/quiver/issues');
             }
           }
         ]
