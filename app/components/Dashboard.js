@@ -90,26 +90,40 @@ export default class Home extends Component<Props> {
   render() {
     const { totalBalance, info, addressesWithBalance } = this.props;
 
+    let founderAddrPresent = false;
+    addressesWithBalance.forEach((addr) => {
+      if (Utils.isFounder(addr.address)) {
+        founderAddrPresent = true;
+      }
+    });
+    const minedLabel = (founderAddrPresent) ? 'Founder' : 'Mined';
+
+    const displayTotal = (totalBalance.transparent > 0) ? totalBalance.total : totalBalance.private;
+
     return (
       <div>
         <div className={[cstyles.well, styles.balancebox].join(' ')}>
           <BalanceBlockHighlight
-            zecValue={totalBalance.total}
+            zecValue={displayTotal}
             usdValue={Utils.getZecToUsdString(info.zecPrice, totalBalance.total)}
             currencyName={info.currencyName}
           />
-          <BalanceBlock
-            topLabel="Shielded"
-            zecValue={totalBalance.private}
-            usdValue={Utils.getZecToUsdString(info.zecPrice, totalBalance.private)}
-            currencyName={info.currencyName}
-          />
-          <BalanceBlock
-            topLabel="Transparent"
-            zecValue={totalBalance.transparent}
-            usdValue={Utils.getZecToUsdString(info.zecPrice, totalBalance.transparent)}
-            currencyName={info.currencyName}
-          />
+          {totalBalance.transparent > 0 &&
+            <BalanceBlock
+              topLabel="Available"
+              zecValue={totalBalance.private}
+              usdValue={Utils.getZecToUsdString(info.zecPrice, totalBalance.private)}
+              currencyName={info.currencyName}
+            />
+          }
+          {totalBalance.transparent > 0 &&
+            <BalanceBlock
+              topLabel={minedLabel}
+              zecValue={totalBalance.transparent}
+              usdValue={Utils.getZecToUsdString(info.zecPrice, totalBalance.transparent)}
+              currencyName={info.currencyName}
+            />
+          }
         </div>
 
         <div className={styles.addressbalancecontainer}>

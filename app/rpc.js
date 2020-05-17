@@ -169,7 +169,7 @@ export default class RPC {
     info.latestBlock = infoResult.result.blocks;
     info.connections = infoResult.result.connections;
     info.version = infoResult.result.version;
-    info.currencyName = info.testnet ? 'TAZ' : 'ARW';
+    info.currencyName = info.testnet ? 'TAZ' : '₳RW';
     info.zecPrice = null; // Setting this to null will copy over the existing price
     info.disconnected = false;
 
