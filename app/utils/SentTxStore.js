@@ -6,20 +6,8 @@ import { Transaction, TxDetail } from '../components/AppState';
 import parseMemo from './parseMemo';
 
 export default class SentTxStore {
-  static async getFileName() {
-    const dir = path.join(remote.app.getPath('appData'), 'Arrow');
-
-    if (!fs.existsSync(dir)) {
-      await fs.promises.mkdir(dir);
-    }
-
-    const fileName = path.join(dir, 'senttxstore.dat');
-
-    return fileName;
-  }
-
   static async writeSentTx(sentTx) {
-    const fileName = await this.getFileName();
+    const fileName = await this.locateSentTxStore();
 
     if (!fs.existsSync(fileName)) {
       await fs.promises.writeFile(fileName, JSON.stringify([sentTx]));
@@ -56,7 +44,7 @@ export default class SentTxStore {
 
   static async loadSentTxns(): Transaction[] {
     try {
-      const transactions = JSON.parse(await fs.promises.readFile(SentTxStore.locateSentTxStore()));
+      const transactions = JSON.parse(await fs.promises.readFile(this.locateSentTxStore()));
 
       return transactions.map(transaction => {
         const txRes = transaction.result[0];
