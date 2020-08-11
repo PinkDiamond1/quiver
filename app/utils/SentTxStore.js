@@ -19,7 +19,7 @@ export default class SentTxStore {
 
       json.push(sentTx);
 
-      fs.promises.writeFile(fileName, JSON.stringify(json));
+      await fs.promises.writeFile(fileName, JSON.stringify(json));
     });
   }
 
