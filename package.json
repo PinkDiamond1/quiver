@@ -158,18 +158,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adityapk00/zecwallet-electron.git"
+    "url": "git+https://github.com/Arrowchain/quiver.git"
   },
   "author": {
-    "name": "Aditya Kulkarni",
-    "email": "aditya@zecwallet.co",
-    "url": "https://zecwallet.co"
+    "name": "Arw Development Team",
+    "email": "arrowchain@criptext.com",
+    "url": "https://arrowchain.org/"
   },
   "contributors": [
     {
-      "name": "Aditya Kulkarni",
-      "email": "aditya@zecwallet.co",
-      "url": "https://zecwallet.co"
+      "name": "JSK Infusion",
+      "email": "ksatyama6@gmail.com",
+      "url": "https://github.com/SatyamAK6"
     }
   ],
   "license": "MIT",
@@ -246,7 +246,7 @@
     "cross-spawn": "^7.0.1",
     "css-loader": "^3.3.2",
     "detect-port": "^1.3.0",
-    "electron": "7.1.4",
+    "electron": "4.0.3",
     "electron-builder": "^22.2.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-notarize": "^0.2.1",

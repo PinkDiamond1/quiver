@@ -229,7 +229,7 @@ class Sidebar extends PureComponent<Props, State> {
           <div className={cstyles.margintoplarge}>Quiver Fullnode v0.9.11</div>
           <div className={cstyles.margintoplarge}>Built with Electron.</div>
           <div className={cstyles.margintoplarge}>Copyright (c) 2018-2020, Aditya Kulkarni.</div>
-          <div className={cstyles.margintoplarge}>Copyright (c) 2020, Arrow.</div>
+          <div className={cstyles.margintoplarge}>Copyright (c) 2020-2021, Arw Development Team.</div>
           <div className={cstyles.margintoplarge}>
             The MIT License (MIT) Copyright (c) 2018-present Quiver
             <br />

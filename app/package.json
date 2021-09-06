@@ -5,9 +5,9 @@
   "description": "Quiver Fullnode",
   "main": "./main.prod.js",
   "author": {
-    "name": "Aditya Kulkarni",
-    "email": "aditya@zecwallet.co",
-    "url": "https://github.com/adityapk00/zecwallet-electron"
+    "name": "Arw Development Team",
+    "email": "arrowchain@criptext.com",
+    "url": "https://arrowchain.org/"
   },
   "scripts": {
     "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",
