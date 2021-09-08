@@ -169,10 +169,15 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
 
     // Check for the params
     const params = [
-      { name: 'sapling-output.params', url: 'https://params.quiver.co/params/sapling-output.params' },
-      { name: 'sapling-spend.params', url: 'https://params.quiver.co/params/sapling-spend.params' },
-      { name: 'sprout-groth16.params', url: 'https://params.quiver.co/params/sprout-groth16.params' }
+      { name: 'sapling-output.params', url: 'https://download.z.cash/downloads/sapling-output.params' },
+      { name: 'sapling-spend.params', url: 'https://download.z.cash/downloads/sapling-spend.params' },
+      { name: 'sprout-groth16.params', url: 'https://download.z.cash/downloads/sprout-groth16.params' }
     ];
+    // const params = [
+    //   { name: 'sapling-output.params', url: 'https://params.quiver.co/params/sapling-output.params' },
+    //   { name: 'sapling-spend.params', url: 'http://params.quiver.co/params/sapling-spend.params' },
+    //   { name: 'sprout-groth16.params', url: 'http://params.quiver.co/params/sprout-groth16.params' }
+    // ];
 
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < params.length; i++) {
@@ -263,7 +268,19 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
     confContent += `rpcpassword=${Math.random()
       .toString(36)
       .substring(2, 15)}\n`;
-
+    confContent += 'addnode=165.227.217.165\n';
+    confContent += 'addnode=45.77.143.128\n';
+    confContent += 'addnode=138.197.200.197\n';
+    confContent += 'addnode=91.206.16.214\n';
+    confContent += 'addnode=198.100.144.29:51258\n';
+    confContent += 'addnode=49.183.50.100:29057\n';
+    confContent += 'addnode=62.171.165.174:59960\n';
+    confContent += 'addnode=45.77.143.128:58226\n';
+    confContent += 'addnode=72.185.48.26:52610\n';
+    confContent += 'addnode=18.204.209.173:7654\n';
+    confContent += 'addnode=217.100.21.99:60358\n';
+    confContent += 'addnode=128.199.13.4:7654\n';
+    confContent += 'daemon=1\n';
     if (connectOverTor) {
       confContent += 'proxy=127.0.0.1:9050\n';
     }
@@ -282,17 +299,29 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
 
   setupExitHandler = () => {
     // App is quitting, exit arrowd as well
-    ipcRenderer.on('appquitting', () => {
+    ipcRenderer.on('appquitting', async () => {
       if (this.arrowd) {
         const { history } = this.props;
+        const { rpcConfig } = this.state;
 
-        this.setState({ currentStatus: 'Waiting for arrowd to exit' });
+        this.setState({ currentStatus: 'Waiting for arrowd to exit...' });
         history.push(routes.LOADING);
-        this.arrowd.kill();
-      }
 
-      // And reply that we're all done.
-      ipcRenderer.send('appquitdone');
+        this.arrowd.on('close', () => {
+          ipcRenderer.send('appquitdone');
+        });
+        this.arrowd.on('exit', () => {
+          ipcRenderer.send('appquitdone');
+        });
+
+        console.log('Sending stop');
+        setTimeout(() => {
+          RPC.doRPC('stop', [], rpcConfig);
+        });
+      } else {
+        // And reply that we're all done.
+        ipcRenderer.send('appquitdone');
+      }
     });
   };
 
@@ -415,7 +444,7 @@ class LoadingScreen extends Component<Props, LoadingScreenState> {
                 </div>
 
                 <div className={[cstyles.center, cstyles.margintoplarge].join(' ')}>
-                  <img src={zcashdlogo} width="400px" alt="arrow logo" />
+                  <img src={zcashdlogo} width="200px" alt="arrow logo" />
                 </div>
 
                 <div
